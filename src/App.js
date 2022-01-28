@@ -2,7 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import TOC from './components/TOC.js';
 import Content from './components/Content.js'
-//import Subject from './components/Subject.js'
+import Subject from './components/Subject.js'
 
 
 class App extends Component {
@@ -32,11 +32,19 @@ class App extends Component {
     }
     return (
       <div className="App">
-      {/* <Subject 
+      <Subject 
         title= { this.state.subject.title }
-        sub= { this.state.subject.sub }>
-      </Subject> */}
-      <header>
+        sub= { this.state.subject.sub }
+        onChangePage={function(){
+          if(this.state.mode === 'welcome') {
+            this.setState({mode:'read'});
+          } else {
+            this.setState({mode:'welcome'});
+          }          
+        }.bind(this)}
+        >
+      </Subject>
+      {/* <header>
               <h1><a href="/" onClick={function(e){
                 console.log(e);
                 e.preventDefault();
@@ -44,9 +52,10 @@ class App extends Component {
                 this.setState({
                   mode:'welcome'
                 });
-              }.bind(this)}>{this.state.subject.title}</a></h1>
+              }.bind(this)}>
+              {this.state.subject.title}</a></h1>
               {this.state.subject.sub}
-      </header>
+      </header> */}
       <TOC
         data = { this.state.contents }>
       </TOC>
