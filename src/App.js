@@ -35,12 +35,9 @@ class App extends Component {
       <Subject 
         title= { this.state.subject.title }
         sub= { this.state.subject.sub }
-        onChangePage={function(){
-          if(this.state.mode === 'welcome') {
-            this.setState({mode:'read'});
-          } else {
-            this.setState({mode:'welcome'});
-          }          
+        toMain={function(){
+          alert('to main');
+          this.setState({mode:'welcome'});        
         }.bind(this)}
         >
       </Subject>
@@ -57,6 +54,10 @@ class App extends Component {
               {this.state.subject.sub}
       </header> */}
       <TOC
+        onChangePage={function(){
+          alert('hi');
+          this.setState({mode:'read'});
+        }.bind(this)}
         data = { this.state.contents }>
       </TOC>
       <Content title={_title} desc={_desc}></Content>
