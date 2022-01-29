@@ -7,6 +7,7 @@ class CreateContent extends Component {
         <article>
           <h2>Create</h2>
           <form>
+            git email update test
 
           </form>
         </article>
