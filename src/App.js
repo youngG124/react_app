@@ -1,8 +1,10 @@
 import './App.css';
 import React, { Component } from 'react';
 import TOC from './components/TOC.js';
-import Content from './components/Content.js'
+import ReadContent from './components/ReadContent.js'
 import Subject from './components/Subject.js'
+import Control from './components/Control.js'
+import CreateContent from './components/CreateContent.js'
 
 // git clone to push test(2022.1.28.20:48)
 
@@ -25,10 +27,11 @@ class App extends Component {
 
   render() {
     console.log('App render');
-    var _title, _desc = null;
+    var _title, _desc, _article = null;
     if(this.state.mode === 'welcome') {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode === 'read') {
       var i = 0;
       while(i < this.state.contents.length) {
@@ -40,6 +43,9 @@ class App extends Component {
         }
         i = i + 1;
       }
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+    } else if(this.state.mode === 'create') {
+      _article = <CreateContent></CreateContent>
     }
     return (
       <div className="App">
@@ -60,7 +66,12 @@ class App extends Component {
         }.bind(this)} // 하위 컴포넌트에 명령할 때는 props에 바로 접근
         data = { this.state.contents }>
       </TOC>
-      <Content title={_title} desc={_desc}></Content>
+      <Control onChangeMode={function(_mode) {
+        this.setState({
+          mode:_mode
+        })
+      }.bind(this)}></Control>
+      {_article}
     </div>
     );
   }
