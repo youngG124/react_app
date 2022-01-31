@@ -17,10 +17,10 @@ class UpdateContent extends Component {
               alert("Submitted");
             }.bind(this)}>
             <p><input type="text" name="title" 
-            placeholder="title"></input></p>
+            defaultValue={this.props.data.title}></input></p>
             <p>
               <textarea name="desc" 
-              placeholder="description"></textarea>
+              defaultValue={this.props.data.desc}></textarea>
             </p>
             <p><input type="submit"></input></p>
           </form>
