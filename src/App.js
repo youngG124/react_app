@@ -12,6 +12,7 @@ import CreateContent from './components/CreateContent.js'
 class App extends Component {
   constructor(props) {
     super(props);
+    this.max_content_id=3;
     this.state = {
       selected_content_id:3,
       mode:'create',
@@ -31,7 +32,8 @@ class App extends Component {
     if(this.state.mode === 'welcome') {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+      _article = <ReadContent title={_title} 
+      desc={_desc}></ReadContent>
     } else if(this.state.mode === 'read') {
       var i = 0;
       while(i < this.state.contents.length) {
@@ -43,10 +45,22 @@ class App extends Component {
         }
         i = i + 1;
       }
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+      _article = <ReadContent title={_title} 
+      desc={_desc}></ReadContent>
     } else if(this.state.mode === 'create') {
-      _article = <CreateContent onSubmit={function(_title,_desc){
-        console.log(_title,_desc);
+      _article = <CreateContent 
+      onSubmit={function(_title,_desc){
+        // add contnet to this.state.contents
+        this.max_content_id = this.max_content_id + 1;
+        // this.state.contents.push(
+        //   {id:this.max_content_id, title:_title, desc:_desc}
+        // );
+        var _contents = this.state.contents.concat(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        );
+        this.setState({
+          contents:_contents
+        });
       }.bind(this)}></CreateContent>
     }
     return (
@@ -64,8 +78,8 @@ class App extends Component {
           this.setState({
             mode:'read',
             selected_content_id:Number(id)
-          }); // 상위 컴포넌트 변경은 state의 변경으로
-        }.bind(this)} // 하위 컴포넌트에 명령할 때는 props에 바로 접근
+          });
+        }.bind(this)}
         data = { this.state.contents }>
       </TOC>
       <Control onChangeMode={function(_mode) {
