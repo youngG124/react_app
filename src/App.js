@@ -14,7 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       selected_content_id:3,
-      mode:'welcome',
+      mode:'create',
       subject:{title : 'WEB', sub : 'World Wide Web!'}, //subject라는 프로퍼티에 값 하나
       welcome:{title:'Welcome', desc:"Hello, React!"},
       contents:[ // contents라고하는 property를 state에 추가
