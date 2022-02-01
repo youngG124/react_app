@@ -17,7 +17,7 @@ class App extends Component {
     this.max_content_id=3;
     this.state = {
       selected_content_id:3,
-      mode:'create',
+      mode:'welcome',
       subject:{title : 'WEB', sub : 'World Wide Web!'}, //subject라는 프로퍼티에 값 하나
       welcome:{title:'Welcome', desc:"Hello, React!"},
       contents:[ // contents라고하는 property를 state에 추가
@@ -70,8 +70,24 @@ class App extends Component {
     } else if(this.state.mode === 'update') {
       _content = this.getReadContent();
       _article = <UpdateContent data={_content}
-      onSubmit={function(_title,_desc){  
-      }.bind(this)}></UpdateContent>
+      onSubmit={
+        function(_id,_title,_desc){
+          // 원본을 바꾸지 않음.
+          var _contents = Array.from(this.state.contents);
+          var i = 0;
+          while(i < _contents.length) {
+            if(_contents[i].id === _id) {
+              _contents[i] = {id:_id, title:_title, desc:_desc};
+              break;
+            }
+            i = i + 1;
+          }
+          this.setState({
+            contents:_contents,
+            mode:'read',
+            selected_content_id:this.max_content_id
+          });
+        }.bind(this)}></UpdateContent>
     }
     return _article;
   }
@@ -97,6 +113,28 @@ class App extends Component {
         data = { this.state.contents }>
       </TOC>
       <Control onChangeMode={function(_mode) {
+        if(_mode === 'delete') {
+          if(window.confirm('really?')){
+            var _contents = Array.from(this.state.contents);
+            var i = 0;
+            while(i < _contents.length) {
+              if(_contents[i].id === this.state.selected_content_id) {
+                _contents.splice(i, 1);
+                break;
+              }
+              i = i + 1;
+            }
+            this.setState({
+              mode:'welcome',
+              contents:_contents
+            });
+            alert('deleted');
+          }
+        } else {
+          this.setState({
+            mode:_mode
+          });
+        }
         this.setState({
           mode:_mode
         })
